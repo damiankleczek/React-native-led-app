@@ -1,20 +1,19 @@
 import React, {useState} from 'react';
-import {StyleSheet, Text, View, SafeAreaView, StatusBar} from 'react-native';
-import tinycolor from 'tinycolor2';
+import {StyleSheet, Text, View} from 'react-native';
 import CustomSwitch from './CustomSwitch';
 import LightnessSlider from './LightnessSlider';
 import ColorPicker from './ColorPicker';
+import tinycolor from 'tinycolor2';
 
-const Element = () => {
-  const [leds, setLeds] = useState({
-    key: 1,
-    label: 'LED1',
-    isSwitchOn: false,
-    isModalVisible: false,
-    color: 'yellow',
-    sliderValue: 10,
-  });
-
+const Element = ({
+  led,
+  leds,
+  i,
+  updateSwitch,
+  updateModal,
+  updateModalOnOk,
+  updateSlider,
+}) => {
   const [recentsThree, setRecentsThree] = useState([
     '#247ba0',
     '#70c1b3',
@@ -26,13 +25,13 @@ const Element = () => {
   return (
     <View style={styles.elementHolder}>
       <View style={styles.element}>
-        <Text style={styles.text}>{leds.label}</Text>
+        <Text style={styles.text}>{led.label}</Text>
         <CustomSwitch
-          onValueChange={(toggleValue) => {
-            leds.isSwitchOn = toggleValue;
-            setLeds({...leds, toggleValue});
+          onValueChange={() => {
+            updateSwitch(leds, i);
           }}
-          value={leds.isSwitchOn}
+          // onValueChange={updateSwitch(leds, i, led, led.key)}
+          value={led.isSwitchOn}
         />
       </View>
 
@@ -41,26 +40,16 @@ const Element = () => {
       <View style={styles.colorArea}>
         <Text style={styles.colorPickerLabel}>Kolor:</Text>
         <ColorPicker
-          onPress={() =>
-            setLeds({
-              ...leds,
-              isModalVisible: true,
-            })
-          }
-          visible={leds.isModalVisible}
-          color={leds.color}
-          onCancel={() =>
-            setLeds({
-              ...leds,
-              isModalVisible: false,
-            })
-          }
+          onPress={() => {
+            updateModal(leds, i, true);
+          }}
+          visible={led.isModalVisible}
+          color={led.color}
+          onCancel={() => {
+            updateModal(leds, i, false);
+          }}
           onOk={(colorHex) => {
-            setLeds({
-              ...leds,
-              isModalVisible: false,
-              color: tinycolor(colorHex).toHsl(),
-            }),
+            updateModalOnOk(leds, i, false, tinycolor(colorHex).toHsl()),
               setRecentsThree([
                 colorHex,
                 ...recentsThree.filter((c) => c !== colorHex).slice(0, 4),
@@ -72,11 +61,13 @@ const Element = () => {
 
       <View style={styles.lightnessArea}>
         <Text style={styles.lightnessAreaText}>
-          Jasność: {leds.sliderValue}%
+          Jasność: {led.sliderValue}%
         </Text>
         <LightnessSlider
-          value={leds.sliderValue}
-          onValueChange={(value) => setLeds({...leds, sliderValue: value})}
+          value={led.sliderValue}
+          onValueChange={(value) => {
+            updateSlider(leds, i, value);
+          }}
         />
       </View>
     </View>
