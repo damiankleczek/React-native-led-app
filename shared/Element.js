@@ -7,8 +7,6 @@ import tinycolor from 'tinycolor2';
 
 const Element = ({
   led,
-  leds,
-  i,
   updateSwitch,
   updateModal,
   updateModalOnOk,
@@ -28,9 +26,8 @@ const Element = ({
         <Text style={styles.text}>{led.label}</Text>
         <CustomSwitch
           onValueChange={() => {
-            updateSwitch(leds, i);
+            updateSwitch(led.key);
           }}
-          // onValueChange={updateSwitch(leds, i, led, led.key)}
           value={led.isSwitchOn}
         />
       </View>
@@ -41,15 +38,15 @@ const Element = ({
         <Text style={styles.colorPickerLabel}>Kolor:</Text>
         <ColorPicker
           onPress={() => {
-            updateModal(leds, i, true);
+            updateModal(led.key, true);
           }}
           visible={led.isModalVisible}
           color={led.color}
           onCancel={() => {
-            updateModal(leds, i, false);
+            updateModal(led.key, false);
           }}
           onOk={(colorHex) => {
-            updateModalOnOk(leds, i, false, tinycolor(colorHex).toHsl()),
+            updateModalOnOk(led.key, false, tinycolor(colorHex).toHsl()),
               setRecentsThree([
                 colorHex,
                 ...recentsThree.filter((c) => c !== colorHex).slice(0, 4),
@@ -66,7 +63,7 @@ const Element = ({
         <LightnessSlider
           value={led.sliderValue}
           onValueChange={(value) => {
-            updateSlider(leds, i, value);
+            updateSlider(led.key, value);
           }}
         />
       </View>

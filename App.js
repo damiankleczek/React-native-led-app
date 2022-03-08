@@ -32,52 +32,43 @@ const App = () => {
     },
   ]);
 
-  const updateSwitch = (leds, i) => {
-    let newLeds = [...leds];
-    newLeds[i] = {
-      ...newLeds[i],
-      isSwitchOn: !newLeds[i].isSwitchOn,
-    };
-    setLeds(newLeds);
+  const updateSwitch = (ledKey) => {
+    setLeds((prevLeds) => {
+      return prevLeds.map((led) => {
+        // if (led.key === ledKey) {
+        //   return {...led, isSwitchOn: !led.isSwitchOn};
+        // }
+        // return led;
+        return led.key === ledKey ? {...led, isSwitchOn: !led.isSwitchOn} : led;
+      });
+    });
   };
 
-  const updateModal = (leds, i, isVisible) => {
-    let newLeds = [...leds];
-    newLeds[i] = {
-      ...newLeds[i],
-      isModalVisible: isVisible,
-    };
-    setLeds(newLeds);
+  const updateModal = (ledKey, isVisible) => {
+    setLeds((prevLeds) => {
+      return prevLeds.map((led) => {
+        return led.key === ledKey ? {...led, isModalVisible: isVisible} : led;
+      });
+    });
   };
 
-  const updateModalOnOk = (leds, i, isVisible, color) => {
-    let newLeds = [...leds];
-    newLeds[i] = {
-      ...newLeds[i],
-      isModalVisible: isVisible,
-      color: color,
-    };
-    setLeds(newLeds);
+  const updateModalOnOk = (ledKey, isVisible, color) => {
+    setLeds((prevLeds) => {
+      return prevLeds.map((led) => {
+        return led.key === ledKey
+          ? {...led, isModalVisible: isVisible, color: color}
+          : led;
+      });
+    });
   };
 
-  const updateSlider = (leds, i, value) => {
-    let newLeds = [...leds];
-    newLeds[i] = {
-      ...newLeds[i],
-      sliderValue: value,
-    };
-    setLeds(newLeds);
+  const updateSlider = (ledKey, value) => {
+    setLeds((prevLeds) => {
+      return prevLeds.map((led) => {
+        return led.key === ledKey ? {...led, sliderValue: value} : led;
+      });
+    });
   };
-
-  // const updateSwitch = (leds, i, led, key) => {
-  //   setLeds((prevLeds) => {
-  //     return [
-  //       ...prevLeds,
-  //       {...prevLeds[i], isSwitchOn: !prevLeds[i].isSwitchOn},
-  //     ];
-  //     // return led.key === key ? {...led, isSwitchOn: !led.isSwitchOn} : led;
-  //   });
-  // };
 
   let list = () => {
     return leds.map((led, i) => {
@@ -85,8 +76,6 @@ const App = () => {
         <Element
           key={led.key}
           led={led}
-          leds={leds}
-          i={i}
           updateSwitch={updateSwitch}
           updateModalOnOk={updateModalOnOk}
           updateModal={updateModal}
