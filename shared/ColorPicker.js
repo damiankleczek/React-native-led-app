@@ -5,32 +5,47 @@ import tinycolor from 'tinycolor2';
 
 const ColorPicker = ({onPress, visible, color, onCancel, onOk, swatches}) => {
   return (
-    <View>
-      <TouchableOpacity
-        onPress={onPress}
-        style={[
-          styles.colorPreview,
-          {backgroundColor: tinycolor(color).toHslString()},
-        ]}>
-        <Text style={styles.colorPicker}></Text>
-      </TouchableOpacity>
+    <View style={styles.colorArea}>
+      <Text style={styles.colorPickerLabel}>Kolor:</Text>
+      <View>
+        <TouchableOpacity
+          onPress={onPress}
+          style={[
+            styles.colorPreview,
+            {backgroundColor: tinycolor(color).toHslString()},
+          ]}>
+          <Text style={styles.colorPicker}></Text>
+        </TouchableOpacity>
 
-      <SlidersColorPicker
-        visible={visible}
-        color={color}
-        returnMode={'hex'}
-        onCancel={onCancel}
-        onOk={onOk}
-        swatches={swatches}
-        swatchesLabel="RECENTS"
-        okLabel="Done"
-        cancelLabel="Cancel"
-      />
+        <SlidersColorPicker
+          visible={visible}
+          color={color}
+          returnMode={'hex'}
+          onCancel={onCancel}
+          onOk={onOk}
+          swatches={swatches}
+          swatchesLabel="RECENTS"
+          okLabel="Done"
+          cancelLabel="Cancel"
+        />
+      </View>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
+  colorArea: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingHorizontal: 5,
+  },
+
+  colorPickerLabel: {
+    fontSize: 20,
+    fontWeight: 'bold',
+  },
+
   colorPreview: {
     borderRadius: 3,
     shadowColor: 'black',
