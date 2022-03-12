@@ -102,7 +102,7 @@ const styles = StyleSheet.create({
   content: {
     flex: 1,
     flexDirection: 'column',
-    paddingHorizontal: 10,
+    marginVertical: 4,
   },
 
   statusbar: {

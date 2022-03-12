@@ -68,7 +68,7 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     justifyContent: 'space-between',
     backgroundColor: '#fff',
-    marginTop: 10,
+    margin: 5,
     paddingVertical: 10,
     height: 175,
   },
