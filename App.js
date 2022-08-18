@@ -1,44 +1,25 @@
 import React, {useState} from 'react';
-import {StyleSheet, View, SafeAreaView, StatusBar} from 'react-native';
+import {
+  StyleSheet,
+  View,
+  ScrollView,
+  SafeAreaView,
+  StatusBar,
+  Button,
+  Text,
+} from 'react-native';
 import Element from './shared/Element';
+import AddNewElement from './shared/AddNewElement';
 
 const App = () => {
   console.warn = () => {};
 
-  const [leds, setLeds] = useState([
-    {
-      key: 1,
-      label: 'LED1',
-      isSwitchOn: false,
-      isModalVisible: false,
-      color: 'yellow',
-      sliderValue: 10,
-    },
-    {
-      key: 2,
-      label: 'LED2',
-      isSwitchOn: false,
-      isModalVisible: false,
-      color: 'orange',
-      sliderValue: 30,
-    },
-    {
-      key: 3,
-      label: 'LED3',
-      isSwitchOn: false,
-      isModalVisible: false,
-      color: 'red',
-      sliderValue: 50,
-    },
-  ]);
+  const [leds, setLeds] = useState([]);
+  const [isFormOpen, setIsFormOpen] = useState(false);
 
   const updateSwitch = (ledKey) => {
     setLeds((prevLeds) => {
       return prevLeds.map((led) => {
-        // if (led.key === ledKey) {
-        //   return {...led, isSwitchOn: !led.isSwitchOn};
-        // }
-        // return led;
         return led.key === ledKey ? {...led, isSwitchOn: !led.isSwitchOn} : led;
       });
     });
@@ -70,11 +51,22 @@ const App = () => {
     });
   };
 
+  const toggleNewElementForm = () => {
+    setIsFormOpen(!isFormOpen);
+  };
+
+  const addNewElement = (newLed) => {
+    setLeds((prevLeds) => {
+      return [...prevLeds, newLed];
+    });
+    toggleNewElementForm();
+  };
+
   let list = () => {
     return leds.map((led, i) => {
       return (
         <Element
-          key={led.key}
+          key={i}
           led={led}
           updateSwitch={updateSwitch}
           updateModalOnOk={updateModalOnOk}
@@ -88,7 +80,30 @@ const App = () => {
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar backgroundColor={styles.statusbar.backgroundColor}></StatusBar>
-      <View style={styles.content}>{list()}</View>
+      <ScrollView style={styles.content}>
+        {leds.length === 0 ? (
+          <View style={styles.initialContent}>
+            <Text style={styles.initialText}>
+              Brak elementów do wyświetlenia. Dodaj pierwszy element.
+            </Text>
+          </View>
+        ) : (
+          list()
+        )}
+      </ScrollView>
+
+      <View style={styles.newElementButton}>
+        <Button
+          color={styles.newElementButton.color}
+          title="Dodaj nowy"
+          onPress={toggleNewElementForm}></Button>
+      </View>
+
+      <AddNewElement
+        isOpen={isFormOpen}
+        addNewElement={addNewElement}
+        toggleHandler={toggleNewElementForm}
+      />
     </SafeAreaView>
   );
 };
@@ -107,6 +122,22 @@ const styles = StyleSheet.create({
 
   statusbar: {
     backgroundColor: '#004346',
+  },
+
+  initialContent: {
+    marginVertical: 10,
+    marginTop: 4,
+  },
+
+  initialText: {
+    color: '#fff',
+    fontSize: 16,
+    textAlign: 'center',
+  },
+
+  newElementButton: {
+    color: '#c2185b',
+    margin: 5,
   },
 });
 export default App;
