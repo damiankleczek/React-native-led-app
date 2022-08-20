@@ -24,9 +24,9 @@ const ColorPicker = ({onPress, visible, color, onCancel, onOk, swatches}) => {
           onCancel={onCancel}
           onOk={onOk}
           swatches={swatches}
-          swatchesLabel="RECENTS"
-          okLabel="Done"
-          cancelLabel="Cancel"
+          swatchesLabel="OSTATNIE"
+          okLabel="Zrobione"
+          cancelLabel="Anuluj"
         />
       </View>
     </View>
