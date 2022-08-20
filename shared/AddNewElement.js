@@ -65,7 +65,7 @@ const styles = StyleSheet.create({
   },
 
   closeContainer: {
-    alignSelf: 'flex-end',
+    alignSelf: 'flex-start',
     marginTop: 10,
     marginHorizontal: 10,
     paddingVertical: 10,
