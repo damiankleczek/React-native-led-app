@@ -20,7 +20,7 @@ const AddNewElement = ({toggleHandler, isOpen, addNewElement}) => {
     key: Math.random(),
     label: name,
     isSwitchOn: false,
-    isModalVisible: false,
+    isColorPickerVisible: false,
     color: 'red',
     sliderValue: 50,
   };

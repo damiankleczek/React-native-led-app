@@ -25,19 +25,25 @@ const App = () => {
     });
   };
 
-  const updateModal = (ledKey, isVisible) => {
+  const updateColorPicker = (ledKey) => {
     setLeds((prevLeds) => {
       return prevLeds.map((led) => {
-        return led.key === ledKey ? {...led, isModalVisible: isVisible} : led;
+        return led.key === ledKey
+          ? {...led, isColorPickerVisible: !led.isColorPickerVisible}
+          : led;
       });
     });
   };
 
-  const updateModalOnOk = (ledKey, isVisible, color) => {
+  const updateColorPickerOnOk = (ledKey, color) => {
     setLeds((prevLeds) => {
       return prevLeds.map((led) => {
         return led.key === ledKey
-          ? {...led, isModalVisible: isVisible, color: color}
+          ? {
+              ...led,
+              isColorPickerVisible: !led.isColorPickerVisible,
+              color: color,
+            }
           : led;
       });
     });
@@ -69,8 +75,8 @@ const App = () => {
           key={i}
           led={led}
           updateSwitch={updateSwitch}
-          updateModalOnOk={updateModalOnOk}
-          updateModal={updateModal}
+          updateColorPickerOnOk={updateColorPickerOnOk}
+          updateColorPicker={updateColorPicker}
           updateSlider={updateSlider}
         />
       );
