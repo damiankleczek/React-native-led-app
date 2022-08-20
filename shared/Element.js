@@ -8,8 +8,8 @@ import tinycolor from 'tinycolor2';
 const Element = ({
   led,
   updateSwitch,
-  updateModal,
-  updateModalOnOk,
+  updateColorPicker,
+  updateColorPickerOnOk,
   updateSlider,
 }) => {
   const [recentsThree, setRecentsThree] = useState([
@@ -35,17 +35,17 @@ const Element = ({
       <View style={styles.spaceline}></View>
 
       <ColorPicker
-        visible={led.isModalVisible}
+        visible={led.isColorPickerVisible}
         color={led.color}
         swatches={recentsThree}
         onPress={() => {
-          updateModal(led.key, true);
+          updateColorPicker(led.key);
         }}
         onCancel={() => {
-          updateModal(led.key, false);
+          updateColorPicker(led.key);
         }}
         onOk={(colorHex) => {
-          updateModalOnOk(led.key, false, tinycolor(colorHex).toHsl()),
+          updateColorPickerOnOk(led.key, tinycolor(colorHex).toHsl()),
             setRecentsThree([
               colorHex,
               ...recentsThree.filter((c) => c !== colorHex).slice(0, 4),
