@@ -68,6 +68,12 @@ const App = () => {
     toggleNewElementForm();
   };
 
+  const deleteElement = (ledKey) => {
+    setLeds((prevLeds) => {
+      return prevLeds.filter((led) => led.key !== ledKey);
+    });
+  };
+
   let list = () => {
     return leds.map((led, i) => {
       return (
@@ -78,6 +84,7 @@ const App = () => {
           updateColorPickerOnOk={updateColorPickerOnOk}
           updateColorPicker={updateColorPicker}
           updateSlider={updateSlider}
+          deleteElement={deleteElement}
         />
       );
     });

@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {StyleSheet, Text, View} from 'react-native';
+import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import CustomSwitch from './CustomSwitch';
 import LightnessSlider from './LightnessSlider';
 import ColorPicker from './ColorPicker';
@@ -11,6 +11,7 @@ const Element = ({
   updateColorPicker,
   updateColorPickerOnOk,
   updateSlider,
+  deleteElement,
 }) => {
   const [recentsThree, setRecentsThree] = useState([
     '#247ba0',
@@ -22,14 +23,23 @@ const Element = ({
 
   return (
     <View style={styles.elementHolder}>
-      <View style={styles.element}>
+      <View style={styles.elementHeader}>
         <Text style={styles.text}>{led.label}</Text>
-        <CustomSwitch
-          value={led.isSwitchOn}
-          onValueChange={() => {
-            updateSwitch(led.key);
-          }}
-        />
+        <View style={styles.buttonContainer}>
+          <TouchableOpacity
+            onPress={() => {
+              deleteElement(led.key);
+            }}>
+            <Text style={styles.deleteButton}>USUŃ</Text>
+          </TouchableOpacity>
+
+          <CustomSwitch
+            value={led.isSwitchOn}
+            onValueChange={() => {
+              updateSwitch(led.key);
+            }}
+          />
+        </View>
       </View>
 
       <View style={styles.spaceline}></View>
@@ -70,10 +80,11 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     margin: 5,
     paddingVertical: 10,
+    paddingHorizontal: 5,
     height: 175,
   },
 
-  element: {
+  elementHeader: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
@@ -84,6 +95,19 @@ const styles = StyleSheet.create({
     color: '#000',
     fontSize: 20,
     fontWeight: 'bold',
+  },
+
+  buttonContainer: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+
+  deleteButton: {
+    fontFamily: 'sans-serif-medium',
+    fontSize: 17,
+    color: '#000',
+    marginRight: 7,
   },
 
   spaceline: {
