@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import CustomSwitch from './CustomSwitch';
 import LightnessSlider from './LightnessSlider';
 import ColorPicker from './ColorPicker';
@@ -30,7 +30,12 @@ const Element = ({
             onPress={() => {
               deleteElement(led.key);
             }}>
-            <Text style={styles.deleteButton}>USUŃ</Text>
+            <View>
+              <Image
+                source={require('../assets/icons/icons8-trash-24.png')}
+                style={styles.icon}
+              />
+            </View>
           </TouchableOpacity>
 
           <CustomSwitch
@@ -103,11 +108,11 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
 
-  deleteButton: {
-    fontFamily: 'sans-serif-medium',
-    fontSize: 17,
-    color: '#000',
-    marginRight: 7,
+  icon: {
+    width: 25,
+    height: 25,
+    resizeMode: 'contain',
+    marginRight: 5,
   },
 
   spaceline: {

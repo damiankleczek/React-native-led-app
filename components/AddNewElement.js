@@ -1,12 +1,12 @@
 import React, {useState} from 'react';
 import {
   StyleSheet,
-  Text,
   View,
   Modal,
   TouchableOpacity,
   TextInput,
   Button,
+  Image,
 } from 'react-native';
 
 const AddNewElement = ({toggleHandler, isOpen, addNewElement}) => {
@@ -34,7 +34,10 @@ const AddNewElement = ({toggleHandler, isOpen, addNewElement}) => {
       <View style={styles.content}>
         <TouchableOpacity onPress={toggleHandler}>
           <View style={styles.closeContainer}>
-            <Text style={styles.closeText}>Anuluj</Text>
+            <Image
+              source={require('../assets/icons/icons8-close-24.png')}
+              style={styles.icon}
+            />
           </View>
         </TouchableOpacity>
 
@@ -65,7 +68,7 @@ const styles = StyleSheet.create({
   },
 
   closeContainer: {
-    alignSelf: 'flex-start',
+    alignSelf: 'center',
     marginTop: 10,
     marginHorizontal: 10,
     paddingVertical: 10,
