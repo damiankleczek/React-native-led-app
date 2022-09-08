@@ -16,8 +16,8 @@ const AddNewElement = ({toggleHandler, isOpen, addNewElement}) => {
     setName(value);
   };
 
-  const newElement = {
-    key: Math.random(),
+  let newElement = {
+    key: `${Date.now()}${name}`,
     label: name,
     isSwitchOn: false,
     isColorPickerVisible: false,

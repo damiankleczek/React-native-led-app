@@ -62,10 +62,10 @@ const Home = () => {
   };
 
   let list = () => {
-    return leds.map((led, i) => {
+    return leds.map((led) => {
       return (
         <Element
-          key={i}
+          key={led.key}
           led={led}
           updateState={updateElementState}
           deleteElement={deleteElement}
