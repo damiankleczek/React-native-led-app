@@ -17,42 +17,29 @@ const Home = () => {
   const [leds, setLeds] = useState([]);
   const [isFormOpen, setIsFormOpen] = useState(false);
 
-  const updateSwitch = (ledKey) => {
+  const updateElementState = (action, ledKey, value = null) => {
     setLeds((prevLeds) => {
       return prevLeds.map((led) => {
-        return led.key === ledKey ? {...led, isSwitchOn: !led.isSwitchOn} : led;
-      });
-    });
-  };
-
-  const updateColorPicker = (ledKey) => {
-    setLeds((prevLeds) => {
-      return prevLeds.map((led) => {
-        return led.key === ledKey
-          ? {...led, isColorPickerVisible: !led.isColorPickerVisible}
-          : led;
-      });
-    });
-  };
-
-  const updateColorPickerOnOk = (ledKey, color) => {
-    setLeds((prevLeds) => {
-      return prevLeds.map((led) => {
-        return led.key === ledKey
-          ? {
-              ...led,
-              isColorPickerVisible: !led.isColorPickerVisible,
-              color: color,
-            }
-          : led;
-      });
-    });
-  };
-
-  const updateSlider = (ledKey, value) => {
-    setLeds((prevLeds) => {
-      return prevLeds.map((led) => {
-        return led.key === ledKey ? {...led, sliderValue: value} : led;
+        switch (action) {
+          case 'switch':
+            return led.key === ledKey
+              ? {...led, isSwitchOn: !led.isSwitchOn}
+              : led;
+          case 'toggleColorPicker':
+            return led.key === ledKey
+              ? {...led, isColorPickerVisible: !led.isColorPickerVisible}
+              : led;
+          case 'setColorPicker':
+            return led.key === ledKey
+              ? {
+                  ...led,
+                  isColorPickerVisible: !led.isColorPickerVisible,
+                  color: value,
+                }
+              : led;
+          case 'slider':
+            return led.key === ledKey ? {...led, sliderValue: value} : led;
+        }
       });
     });
   };
@@ -80,10 +67,7 @@ const Home = () => {
         <Element
           key={i}
           led={led}
-          updateSwitch={updateSwitch}
-          updateColorPickerOnOk={updateColorPickerOnOk}
-          updateColorPicker={updateColorPicker}
-          updateSlider={updateSlider}
+          updateState={updateElementState}
           deleteElement={deleteElement}
         />
       );

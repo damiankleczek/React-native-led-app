@@ -5,14 +5,7 @@ import LightnessSlider from './LightnessSlider';
 import ColorPicker from './ColorPicker';
 import tinycolor from 'tinycolor2';
 
-const Element = ({
-  led,
-  updateSwitch,
-  updateColorPicker,
-  updateColorPickerOnOk,
-  updateSlider,
-  deleteElement,
-}) => {
+const Element = ({led, updateState, deleteElement}) => {
   const [recentsThree, setRecentsThree] = useState([
     '#247ba0',
     '#70c1b3',
@@ -41,7 +34,7 @@ const Element = ({
           <CustomSwitch
             value={led.isSwitchOn}
             onValueChange={() => {
-              updateSwitch(led.key);
+              updateState('switch', led.key);
             }}
           />
         </View>
@@ -54,13 +47,13 @@ const Element = ({
         color={led.color}
         swatches={recentsThree}
         onPress={() => {
-          updateColorPicker(led.key);
+          updateState('toggleColorPicker', led.key);
         }}
         onCancel={() => {
-          updateColorPicker(led.key);
+          updateState('toggleColorPicker', led.key);
         }}
         onOk={(colorHex) => {
-          updateColorPickerOnOk(led.key, tinycolor(colorHex).toHsl()),
+          updateState('setColorPicker', led.key, tinycolor(colorHex).toHsl()),
             setRecentsThree([
               colorHex,
               ...recentsThree.filter((c) => c !== colorHex).slice(0, 4),
@@ -71,7 +64,7 @@ const Element = ({
       <LightnessSlider
         value={led.sliderValue}
         onValueChange={(value) => {
-          updateSlider(led.key, value);
+          updateState('slider', led.key, value);
         }}
       />
     </View>
