@@ -16,13 +16,16 @@ const AddNewElement = ({toggleHandler, isOpen, addNewElement}) => {
     setName(value);
   };
 
-  let newElement = {
-    key: `${Date.now()}${name}`,
-    label: name,
-    isSwitchOn: false,
-    isColorPickerVisible: false,
-    color: 'red',
-    sliderValue: 50,
+  const createElement = () => {
+    const newElement = {
+      key: `${Date.now()}${name}`,
+      label: name,
+      isSwitchOn: false,
+      isColorPickerVisible: false,
+      color: 'red',
+      sliderValue: 50,
+    };
+    addNewElement(newElement);
   };
 
   return (
@@ -53,7 +56,7 @@ const AddNewElement = ({toggleHandler, isOpen, addNewElement}) => {
             color={styles.addElementButton.color}
             title="Dodaj"
             onPress={() => {
-              addNewElement(newElement), setName('');
+              createElement();
             }}></Button>
         </View>
       </View>
