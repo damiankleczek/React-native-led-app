@@ -53,6 +53,7 @@ const Home = () => {
 
   const toggleNewElementForm = () => {
     setIsFormOpen(!isFormOpen);
+    setElementName('');
   };
 
   const addNewElement = (newLed) => {
@@ -60,7 +61,6 @@ const Home = () => {
       return [...prevLeds, newLed];
     });
     toggleNewElementForm();
-    setElementName('');
   };
 
   const editElement = (key) => {
@@ -70,9 +70,9 @@ const Home = () => {
       return led.key === key;
     });
 
+    toggleNewElementForm();
     setElementName(editedElement.label);
     setIsElementEdited(true);
-    toggleNewElementForm();
   };
 
   const updateEditedElement = () => {
@@ -83,7 +83,6 @@ const Home = () => {
     });
     toggleNewElementForm();
     setIsElementEdited(false);
-    setElementName('');
   };
 
   const deleteElement = (ledKey) => {
