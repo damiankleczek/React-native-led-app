@@ -9,13 +9,15 @@ import {
   Image,
 } from 'react-native';
 
-const AddNewElement = ({toggleHandler, isOpen, addNewElement}) => {
-  const [name, setName] = useState('');
-
-  const onChangeName = (value) => {
-    setName(value);
-  };
-
+const AddNewElement = ({
+  toggleHandler,
+  isOpen,
+  addNewElement,
+  name,
+  onChangeName,
+  isEdited,
+  updateEditedElement,
+}) => {
   const createElement = () => {
     const newElement = {
       key: `${Date.now()}${name}`,
@@ -26,6 +28,7 @@ const AddNewElement = ({toggleHandler, isOpen, addNewElement}) => {
       sliderValue: 50,
     };
     addNewElement(newElement);
+    // onChangeName(''); //clear name state in home component via this function
   };
 
   return (
@@ -49,14 +52,15 @@ const AddNewElement = ({toggleHandler, isOpen, addNewElement}) => {
           onChangeText={onChangeName}
           placeholder="Wpisz nazwę"
           placeholderTextColor={styles.textInput.color}
+          value={name}
         />
 
         <View style={styles.addElementButton}>
           <Button
             color={styles.addElementButton.color}
-            title="Dodaj"
+            title={isEdited ? 'Edytuj' : 'Dodaj'}
             onPress={() => {
-              createElement();
+              isEdited ? updateEditedElement() : createElement();
             }}></Button>
         </View>
       </View>

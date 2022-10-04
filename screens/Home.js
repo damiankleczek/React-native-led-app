@@ -16,6 +16,13 @@ const Home = () => {
 
   const [leds, setLeds] = useState([]);
   const [isFormOpen, setIsFormOpen] = useState(false);
+  const [isElementEdited, setIsElementEdited] = useState(false);
+  const [editedElementId, setEditedElementId] = useState(null);
+  const [elementName, setElementName] = useState('');
+
+  const onChangeName = (value) => {
+    setElementName(value);
+  };
 
   const updateElementState = (action, ledKey, value = null) => {
     setLeds((prevLeds) => {
@@ -53,6 +60,30 @@ const Home = () => {
       return [...prevLeds, newLed];
     });
     toggleNewElementForm();
+    setElementName('');
+  };
+
+  const editElement = (key) => {
+    setEditedElementId(key);
+
+    const editedElement = leds.find((led) => {
+      return led.key === key;
+    });
+
+    setElementName(editedElement.label);
+    setIsElementEdited(true);
+    toggleNewElementForm();
+  };
+
+  const updateEditedElement = () => {
+    setLeds((prevLeds) => {
+      return prevLeds.map((led) => {
+        return led.key === editedElementId ? {...led, label: elementName} : led;
+      });
+    });
+    toggleNewElementForm();
+    setIsElementEdited(false);
+    setElementName('');
   };
 
   const deleteElement = (ledKey) => {
@@ -68,6 +99,7 @@ const Home = () => {
           key={led.key}
           led={led}
           updateState={updateElementState}
+          editElement={editElement}
           deleteElement={deleteElement}
         />
       );
@@ -97,9 +129,13 @@ const Home = () => {
       </View>
 
       <AddNewElement
+        toggleHandler={toggleNewElementForm}
         isOpen={isFormOpen}
         addNewElement={addNewElement}
-        toggleHandler={toggleNewElementForm}
+        name={elementName}
+        onChangeName={onChangeName}
+        isEdited={isElementEdited}
+        updateEditedElement={updateEditedElement}
       />
     </SafeAreaView>
   );

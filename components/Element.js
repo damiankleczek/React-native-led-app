@@ -5,7 +5,7 @@ import LightnessSlider from './LightnessSlider';
 import ColorPicker from './ColorPicker';
 import tinycolor from 'tinycolor2';
 
-const Element = ({led, updateState, deleteElement}) => {
+const Element = ({led, updateState, deleteElement, editElement}) => {
   const [recentsThree, setRecentsThree] = useState([
     '#247ba0',
     '#70c1b3',
@@ -17,7 +17,12 @@ const Element = ({led, updateState, deleteElement}) => {
   return (
     <View style={styles.elementHolder}>
       <View style={styles.elementHeader}>
-        <Text style={styles.text}>{led.label}</Text>
+        <TouchableOpacity
+          onPress={() => {
+            editElement(led.key);
+          }}>
+          <Text style={styles.text}>{led.label}</Text>
+        </TouchableOpacity>
         <View style={styles.buttonContainer}>
           <TouchableOpacity
             onPress={() => {
